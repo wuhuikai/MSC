@@ -7,6 +7,7 @@ import sys
 import json
 import glob
 import gflags as flags
+from tqdm import tqdm
 
 from google.protobuf.json_format import Parse
 
@@ -61,7 +62,7 @@ def main():
         ping = controller.ping()
 
     result = {}
-
+    pbar = tqdm(total=len(replay_infos), desc='#Replay')
     for info_path in replay_infos:
         with open(info_path) as f:
             info = json.load(f)
@@ -74,6 +75,7 @@ def main():
             if races not in result:
                 result[races] = []
             result[races].append((info['path'], info_path))
+        pbar.update()
 
     for k, v in result.items():
         with open(os.path.join(FLAGS.save_path, k+'.json'), 'w') as f:
