@@ -38,3 +38,12 @@ python preprocess.py
   --min_apm [MIN_APM]
   --min_mmr [MIN_MMR]
 ```
+**NOTE:** Prefiltered replay lists are available [HERE](https://drive.google.com/open?id=0Bybnpq8dvwudLWVlU1QtMmNyeE0).
+#### Split Training, Validation and Test sets
+```sh
+python split.py
+  --hq_replays_path $PREFILTERED_REPLAY_LIST_PATH$
+  --save_path $SAVE_PATH$
+  --ratio [TRAIN:VAL:TEST]
+  --seed [RANDOM_SEED]
+```
