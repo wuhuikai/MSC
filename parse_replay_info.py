@@ -53,7 +53,7 @@ class ReplayProcessor(multiprocessing.Process):
 
                         info_json = MessageToJson(info)
                         with open(os.path.join(FLAGS.save_path, os.path.basename(replay_path)), 'w') as f:
-                            json.dump(info_json, f)
+                            json.dump({'info': info_json, 'path':replay_path}, f)
                         with self.counter.get_lock():
                             self.counter.value += 1
                             print('Processing {}/{} ...'.format(self.counter.value, self.total_num))
