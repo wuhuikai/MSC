@@ -27,3 +27,14 @@ python parse_replay_info.py
   --n_instance [N_PROCESSES]
   --batch_size [BATCH_SIZE]
 ```
+**NOTE:** Preparsed replay infos are available [HERE](https://drive.google.com/open?id=0Bybnpq8dvwudX1Z5MVp3THFnTlk).
+#### Filter Replays
+```sh
+python preprocess.py
+  --infos_path $REPLAY_INFO_PATH$
+  --save_path $SAVE_PATH$
+  --min_duration [MIN_DURATION]
+  --max_duration [MAX_DURATION]
+  --min_apm [MIN_APM]
+  --min_mmr [MIN_MMR]
+```
