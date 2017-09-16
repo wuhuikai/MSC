@@ -1,5 +1,7 @@
 replays_infos
 high_quality_replays
+parsed_replays
+
 *.tar.gz
 
 # Byte-compiled / optimized / DLL files
