@@ -17,6 +17,7 @@ from google.protobuf.json_format import MessageToJson
 
 from pysc2 import run_configs
 from pysc2.lib import app
+from pysc2.lib import point
 from s2clientprotocol import sc2api_pb2 as sc_pb
 
 FLAGS = flags.FLAGS
@@ -32,7 +33,11 @@ flags.DEFINE_integer(name='step_mul', default=8,
 flags.DEFINE_integer(name='batch_size', default=300,
                      help='# of replays to process in one iter')
 
-interface = sc_pb.InterfaceOptions(raw=True, score=False, feature_layer=None)
+size = point.Point(1, 1)
+interface = sc_pb.InterfaceOptions(raw=True, score=False,
+                                   feature_layer=sc_pb.SpatialCameraSetup(width=1))
+size.assign_to(interface.feature_layer.resolution)
+size.assign_to(interface.feature_layer.minimap_resolution)
 
 class ReplayProcessor(multiprocessing.Process):
     """A Process that pulls replays and processes them."""
