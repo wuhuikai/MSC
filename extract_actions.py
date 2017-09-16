@@ -91,14 +91,14 @@ class ReplayProcessor(multiprocessing.Process):
             map_data=map_data,
             options=interface,
             observed_player_id=player_id))
-        save_folder = os.path.join(FLAGS.save_path, race)
+        save_folder = os.path.join(FLAGS.save_path, 'GlobalInfos', race)
         global_info = {'game_info': controller.game_info(),
                        'data_raw': controller.data_raw()}
         with open(os.path.join(save_folder, 'G_{}_{}'.format(
                 player_id, os.path.basename(replay_path))), 'w') as f:
             json.dump({k:MessageToJson(v) for k, v in global_info.items()}, f)
 
-
+        save_folder = os.path.join(FLAGS.save_path, 'Actions', race)
         actions = []
         controller.step()
         while True:
@@ -121,9 +121,10 @@ def main(unused_argv):
     FLAGS.save_path = os.path.join(FLAGS.save_path, os.path.basename(FLAGS.hq_replay_set).split('.')[0])
 
     for race in set(os.path.basename(FLAGS.hq_replay_set).split('.')[0].split('_vs_')):
-        path = os.path.join(FLAGS.save_path, race)
-        if not os.path.isdir(path):
-            os.makedirs(path)
+        for info_type in ['GlobalInfos', 'Actions']:
+            path = os.path.join(FLAGS.save_path, info_type, race)
+            if not os.path.isdir(path):
+                os.makedirs(path)
 
     run_config = run_configs.get()
     try:
