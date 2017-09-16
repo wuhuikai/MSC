@@ -17,7 +17,6 @@ from google.protobuf.json_format import MessageToJson
 
 from pysc2 import run_configs
 from pysc2.lib import app
-from pysc2.lib import point
 from s2clientprotocol import sc2api_pb2 as sc_pb
 
 FLAGS = flags.FLAGS
@@ -33,17 +32,7 @@ flags.DEFINE_integer(name='step_mul', default=8,
 flags.DEFINE_integer(name='batch_size', default=300,
                      help='# of replays to process in one iter')
 
-flags.DEFINE_integer(name='width', default=24,
-                     help='World width')
-flags.DEFINE_integer(name='map_size', default=64,
-                     help='Map size')
-
-FLAGS(sys.argv)
-size = point.Point(FLAGS.map_size, FLAGS.map_size)
-interface = sc_pb.InterfaceOptions(raw=True, score=True,
-                feature_layer=sc_pb.SpatialCameraSetup(width=FLAGS.width))
-size.assign_to(interface.feature_layer.resolution)
-size.assign_to(interface.feature_layer.minimap_resolution)
+interface = sc_pb.InterfaceOptions(raw=True, score=False, feature_layer=None)
 
 class ReplayProcessor(multiprocessing.Process):
     """A Process that pulls replays and processes them."""
@@ -74,11 +63,10 @@ class ReplayProcessor(multiprocessing.Process):
                         if info.local_map_path:
                             map_data = self.run_config.map_data(info.local_map_path)
 
-                        players_info = info.player_info
-                        for player_info in players_info:
+                        for player_info in info.player_info:
                             race = sc_pb.Race.Name(player_info.player_info.race_actual)
-
                             player_id = player_info.player_info.player_id
+
                             self.process_replay(controller, replay_data, map_data, player_id, race, replay_path)
                     except Exception as e:
                         print(e)
@@ -91,22 +79,16 @@ class ReplayProcessor(multiprocessing.Process):
             map_data=map_data,
             options=interface,
             observed_player_id=player_id))
-        save_folder = os.path.join(FLAGS.save_path, 'GlobalInfos', race)
-        global_info = {'game_info': controller.game_info(),
-                       'data_raw': controller.data_raw()}
-        with open(os.path.join(save_folder, 'G_{}_{}'.format(
-                player_id, os.path.basename(replay_path))), 'w') as f:
-            json.dump({k:MessageToJson(v) for k, v in global_info.items()}, f)
 
-        save_folder = os.path.join(FLAGS.save_path, 'Actions', race)
+        save_folder = os.path.join(FLAGS.save_path, race)
         actions = []
         controller.step()
         while True:
             obs = controller.observe()
-            actions.append((FLAGS.step_mul, [MessageToJson(a) for a in obs.actions]))
+            actions.append([MessageToJson(a) for a in obs.actions])
 
             if obs.player_result:
-                with open(os.path.join(save_folder, 'A_{}_{}'.format(
+                with open(os.path.join(save_folder, '{}@{}'.format(
                         player_id, os.path.basename(replay_path))), 'w') as f:
                     json.dump(actions, f)
                 return
@@ -118,13 +100,13 @@ def replay_queue_filler(replay_queue, replay_list):
         replay_queue.put(replay_path)
 
 def main(unused_argv):
-    FLAGS.save_path = os.path.join(FLAGS.save_path, os.path.basename(FLAGS.hq_replay_set).split('.')[0])
+    race_vs_race = os.path.basename(FLAGS.hq_replay_set).split('.')[0]
+    FLAGS.save_path = os.path.join(FLAGS.save_path, 'Actions', race_vs_race)
 
-    for race in set(os.path.basename(FLAGS.hq_replay_set).split('.')[0].split('_vs_')):
-        for info_type in ['GlobalInfos', 'Actions']:
-            path = os.path.join(FLAGS.save_path, info_type, race)
-            if not os.path.isdir(path):
-                os.makedirs(path)
+    for race in set(race_vs_race.split('_vs_')):
+        path = os.path.join(FLAGS.save_path, race)
+        if not os.path.isdir(path):
+            os.makedirs(path)
 
     run_config = run_configs.get()
     try:
