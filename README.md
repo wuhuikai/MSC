@@ -16,8 +16,8 @@ $STAR_CRAFT$
     └── Versions
 ```
 **NOTE:**
-1. **$STAR_CRAFT$/Replays** contains all ***.SC2Replay** files from **3.16.1 - Pack 1** and **3.16.1 - Pack 2**
-2. **$STAR_CRAFT$/Battle.net** contains all contents from the folder **Battle.net** in **3.16.1 - Pack 1** and **3.16.1 - Pack 2**
+1. **$STAR_CRAFT$/Replays** contains all ***.SC2Replay** files from **3.16.1 - Pack 1** and **3.16.1 - Pack 2** [Currently not used]
+2. **$STAR_CRAFT$/Battle.net** contains all contents from the folder **Battle.net** in **3.16.1 - Pack 1** and **3.16.1 - Pack 2** [Currently not used]
 ### Preprocessing Replays
 #### Parse Replay Info
 ```sh
@@ -27,7 +27,7 @@ python parse_replay_info.py
   --n_instance [N_PROCESSES]
   --batch_size [BATCH_SIZE]
 ```
-**NOTE:** Preparsed replay infos are available [HERE](https://drive.google.com/open?id=0Bybnpq8dvwudX1Z5MVp3THFnTlk).
+**NOTE:** Pre-parsed replay infos are available [HERE](https://drive.google.com/open?id=0Bybnpq8dvwudX1Z5MVp3THFnTlk).
 #### Filter Replays
 ```sh
 python preprocess.py
@@ -38,15 +38,8 @@ python preprocess.py
   --min_apm [MIN_APM]
   --min_mmr [MIN_MMR]
 ```
-**NOTE:** Prefiltered replay lists are available [HERE](https://drive.google.com/open?id=0Bybnpq8dvwudLWVlU1QtMmNyeE0).
-#### Split Training, Validation and Test sets
-```sh
-python split.py
-  --hq_replays_path $PREFILTERED_REPLAY_LIST_PATH$
-  --save_path $SAVE_PATH$
-  --ratio [TRAIN:VAL:TEST]
-  --seed [RANDOM_SEED]
-```
+**NOTE:** Pre-filtered replay lists are available [HERE](https://drive.google.com/open?id=0Bybnpq8dvwudLWVlU1QtMmNyeE0).
+### Parsing Replays
 #### Extract Actions
 ```sh
 python extract_actions.py
@@ -55,6 +48,40 @@ python extract_actions.py
   --n_instance [N_PROCESSES]
   --batch_size [BATCH_SIZE]
   --step_mul [STEP_SIZE]
+```
+**NOTE:** The pre-extracted actions are available **NOW**.
+
+[Terran v.s. Terran]() **|** [Terran v.s. Zerg]() **|** [Terran v.s. Protoss]() **|** [Zerg v.s. Zerg]() **|** [Zerg v.s. Protoss]() **|** [Protoss v.s. Protoss]()
+#### Sample Actions
+```sh
+python sample_actions.py
+  --hq_replay_set $PREFILTERED_REPLAY_LIST$
+  --parsed_replays $PARSED_REPLAYS$
+  --infos_path $REPLAY_INFOS$
+  --step_mul [STEP_SIZE]
+  --skip [SKIP_FRAMES] 
+```
+**NOTE:** The pre-sampled actions are available **NOW**.
+
+[Terran v.s. Terran]() **|** [Terran v.s. Zerg]() **|** [Terran v.s. Protoss]() **|** [Zerg v.s. Zerg]() **|** [Zerg v.s. Protoss]() **|** [Protoss v.s. Protoss]()
+#### Extract Sampled Observations
+```sh
+python parse_replay.py
+  --hq_replay_set $PREFILTERED_REPLAY_LIST$
+  --save_path $SAVE_PATH$
+  --n_instance [N_PROCESSES]
+  --batch_size [BATCH_SIZE]
   --width [WORLD_WIDTH]
   --map_size [MAP_SIZE]
+```
+**NOTE:** The pre-sampled observations are available **NOW**.
+
+[Terran v.s. Terran]() **|** [Terran v.s. Zerg]() **|** [Terran v.s. Protoss]() **|** [Zerg v.s. Zerg]() **|** [Zerg v.s. Protoss]() **|** [Protoss v.s. Protoss]()
+### Split Training, Validation and Test sets
+```sh
+python split.py
+  --hq_replays_path $PREFILTERED_REPLAY_LIST_PATH$
+  --save_path $SAVE_PATH$
+  --ratio [TRAIN:VAL:TEST]
+  --seed [RANDOM_SEED]
 ```

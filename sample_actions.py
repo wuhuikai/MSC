@@ -39,12 +39,12 @@ def sample_action_from_player(action_path):
             action = Parse(action_str, sc_pb.Action())
             try:
                 func_id = feat.reverse_action(action).function
+                func_name = FUNCTIONS[func_id].name
+                if func_name.split('_')[0] in {'Build', 'Train', 'Research', 'Morph', 'Cancel', 'Halt', 'Stop'}:
+                    action_name = func_name
+                    break
             except:
                 pass
-            func_name = FUNCTIONS[func_id].name
-            if func_name.split('_')[0] in {'Build', 'Train', 'Research', 'Morph', 'Cancel', 'Halt', 'Stop'}:
-                action_name = func_name
-                break
         if frame_id > 0 and (action_name is not None or frame_id%FLAGS.skip == 0):
             result_frames.append(frame_id-FLAGS.step_mul)
 
@@ -73,7 +73,7 @@ def sample_action(replay_path, action_path, sampled_path):
 
     assert len(result) == 2
     sampled_actions = sorted(set(result[0]) | set(result[1]))
-    
+
     with open(os.path.join(sampled_path, replay_path), 'w') as f:
         json.dump(sampled_actions, f)
 
