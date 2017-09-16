@@ -47,3 +47,14 @@ python split.py
   --ratio [TRAIN:VAL:TEST]
   --seed [RANDOM_SEED]
 ```
+#### Extract Actions
+```sh
+python extract_actions.py
+  --hq_replay_set $PREFILTERED_REPLAY_LIST$
+  --save_path $SAVE_PATH$
+  --n_instance [N_PROCESSES]
+  --batch_size [BATCH_SIZE]
+  --step_mul [STEP_SIZE]
+  --width [WORLD_WIDTH]
+  --map_size [MAP_SIZE]
+```
