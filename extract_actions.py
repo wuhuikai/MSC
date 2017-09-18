@@ -32,10 +32,15 @@ flags.DEFINE_integer(name='step_mul', default=8,
                      help='step size')
 flags.DEFINE_integer(name='batch_size', default=300,
                      help='# of replays to process in one iter')
+flags.DEFINE_integer(name='width', default=24,
+                     help='World width')
+flags.DEFINE_integer(name='map_size', default=64,
+                     help='Map size')
 
-size = point.Point(1, 1)
+FLAGS(sys.argv)
+size = point.Point(FLAGS.map_size, FLAGS.map_size)
 interface = sc_pb.InterfaceOptions(raw=True, score=False,
-                                   feature_layer=sc_pb.SpatialCameraSetup(width=1))
+                                   feature_layer=sc_pb.SpatialCameraSetup(width=FLAGS.width))
 size.assign_to(interface.feature_layer.resolution)
 size.assign_to(interface.feature_layer.minimap_resolution)
 
@@ -57,6 +62,7 @@ class ReplayProcessor(multiprocessing.Process):
                         replay_path = self.replay_queue.get()
                     except Queue.Empty:
                         return
+
                     try:
                         with self.counter.get_lock():
                             self.counter.value += 1
@@ -71,6 +77,10 @@ class ReplayProcessor(multiprocessing.Process):
                         for player_info in info.player_info:
                             race = sc_pb.Race.Name(player_info.player_info.race_actual)
                             player_id = player_info.player_info.player_id
+
+                            if os.path.isfile(os.path.join(FLAGS.save_path, race,
+                                                           '{}@{}'.format(player_id, os.path.basename(replay_path)))):
+                                continue
 
                             self.process_replay(controller, replay_data, map_data, player_id, race, replay_path)
                     except Exception as e:
