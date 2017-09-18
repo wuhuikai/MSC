@@ -30,7 +30,7 @@ flags.DEFINE_integer(name='n_instance', default=16,
                      help='# of processes to run')
 flags.DEFINE_integer(name='step_mul', default=8,
                      help='step size')
-flags.DEFINE_integer(name='batch_size', default=300,
+flags.DEFINE_integer(name='batch_size', default=10,
                      help='# of replays to process in one iter')
 flags.DEFINE_integer(name='width', default=24,
                      help='World width')
@@ -85,6 +85,7 @@ class ReplayProcessor(multiprocessing.Process):
                             self.process_replay(controller, replay_data, map_data, player_id, race, replay_path)
                     except Exception as e:
                         print(e)
+                        break
                     finally:
                         self.replay_queue.task_done()
 
