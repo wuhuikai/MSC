@@ -94,28 +94,27 @@ class ReplayProcessor(multiprocessing.Process):
                             if os.path.isfile(observation_path) and os.path.isfile(global_info_path):
                                 continue
 
+                            ostream = stream.open(observation_path, 'wb', buffer_size=1000)
                             self.process_replay(controller, replay_data, map_data, player_id, actions,
-                                                observation_path, global_info_path)
+                                                ostream, global_info_path)
+                            ostream.close()
                     except Exception as e:
+                        try:
+                            ostream.close()
+                            if os.path.isfile(observation_path):
+                                os.remove(observation_path)
+
+                            if os.path.isfile(global_info_path):
+                                os.remove(global_info_path)
+                        except:
+                            pass
+
                         print(e)
-                        for player_info in info.player_info:
-                            race = sc_pb.Race.Name(player_info.player_info.race_actual)
-                            player_id = player_info.player_info.player_id
-
-                            file_path = os.path.join(FLAGS.save_path, race,
-                                                 '{}@{}'.format(player_id, os.path.basename(replay_path)))
-                            if os.path.isfile(file_path):
-                                os.remove(file_path)
-
-                            file_path = file_path.replace('SampledObservations', 'GlobalInfos')
-                            if os.path.isfile(file_path):
-                                os.remove(file_path)
-
                         break
                     finally:
                         self.replay_queue.task_done()
 
-    def process_replay(self, controller, replay_data, map_data, player_id, actions, observation_path, global_info_path):
+    def process_replay(self, controller, replay_data, map_data, player_id, actions, ostream, global_info_path):
         controller.start_replay(sc_pb.RequestStartReplay(
             replay_data=replay_data,
             map_data=map_data,
@@ -127,21 +126,11 @@ class ReplayProcessor(multiprocessing.Process):
         with open(global_info_path, 'w') as f:
             json.dump({k:MessageToJson(v) for k, v in global_info.items()}, f)
 
-        ostream = stream.open(observation_path, 'wb', buffer_size=1000)
-        idx = 1
         controller.step()
-        while True:
-            controller.step(actions[idx]-actions[idx-1])
+        for pre_id, id in zip(actions[:-1], actions[1:]):
+            controller.step(id - pre_id)
             obs = controller.observe()
-            if idx <= len(actions) - 1:
-                ostream.write(obs)
-                idx += 1
-            if idx >= len(actions):
-                idx = len(actions)-1
-
-            if obs.player_result:
-                ostream.close()
-                return
+            ostream.write(obs)
 
 def replay_queue_filler(replay_queue, replay_list):
     """A thread that fills the replay_queue with replay filenames."""
