@@ -30,7 +30,7 @@ flags.DEFINE_string(name='save_path', default='parsed_replays',
 
 flags.DEFINE_integer(name='n_instance', default=16,
                      help='# of processes to run')
-flags.DEFINE_integer(name='batch_size', default=300,
+flags.DEFINE_integer(name='batch_size', default=10,
                      help='# of replays to process in one iter')
 
 flags.DEFINE_integer(name='width', default=24,
@@ -86,13 +86,36 @@ class ReplayProcessor(multiprocessing.Process):
                         for player_info in info.player_info:
                             race = sc_pb.Race.Name(player_info.player_info.race_actual)
                             player_id = player_info.player_info.player_id
-                            self.process_replay(controller, replay_data, map_data, player_id, race, replay_path, actions)
+
+                            observation_path = os.path.join(FLAGS.save_path, race,
+                                                            '{}@{}'.format(player_id, os.path.basename(replay_path)))
+                            global_info_path = observation_path.replace('SampledObservations', 'GlobalInfos')
+
+                            if os.path.isfile(observation_path) and os.path.isfile(global_info_path):
+                                continue
+
+                            self.process_replay(controller, replay_data, map_data, player_id, actions,
+                                                observation_path, global_info_path)
                     except Exception as e:
                         print(e)
+                        for player_info in info.player_info:
+                            race = sc_pb.Race.Name(player_info.player_info.race_actual)
+                            player_id = player_info.player_info.player_id
+
+                            file_path = os.path.join(FLAGS.save_path, race,
+                                                 '{}@{}'.format(player_id, os.path.basename(replay_path)))
+                            if os.path.isfile(file_path):
+                                os.remove(file_path)
+
+                            file_path = file_path.replace('SampledObservations', 'GlobalInfos')
+                            if os.path.isfile(file_path):
+                                os.remove(file_path)
+
+                        break
                     finally:
                         self.replay_queue.task_done()
 
-    def process_replay(self, controller, replay_data, map_data, player_id, race, replay_path, actions):
+    def process_replay(self, controller, replay_data, map_data, player_id, actions, observation_path, global_info_path):
         controller.start_replay(sc_pb.RequestStartReplay(
             replay_data=replay_data,
             map_data=map_data,
@@ -101,12 +124,10 @@ class ReplayProcessor(multiprocessing.Process):
 
         global_info = {'game_info': controller.game_info(),
                        'data_raw': controller.data_raw()}
-        with open(os.path.join(FLAGS.save_path.replace('SampledObservations',
-                    'GlobalInfos'), race, '{}@{}'.format(player_id, os.path.basename(replay_path))), 'w') as f:
+        with open(global_info_path, 'w') as f:
             json.dump({k:MessageToJson(v) for k, v in global_info.items()}, f)
 
-        ostream = stream.open(os.path.join(FLAGS.save_path, race, '{}@{}'.format(
-                        player_id, os.path.basename(replay_path))), 'wb', buffer_size=1000)
+        ostream = stream.open(observation_path, 'wb', buffer_size=1000)
         idx = 1
         controller.step()
         while True:

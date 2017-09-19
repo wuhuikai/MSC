@@ -27,6 +27,17 @@ python parse_replay_info.py
   --n_instance [N_PROCESSES]
   --batch_size [BATCH_SIZE]
 ```
+**Code for reading processed files:**
+```python
+import json
+from google.protobuf.json_format import Parse
+from s2clientprotocol import sc2api_pb2 as sc_pb
+
+with open(REPLAY_INFO_PATH) as f:
+    info = json.load(f)
+REPLAY_PATH = info['path']
+REPLAY_INFO_PROTO = Parse(info['info'], sc_pb.ResponseReplayInfo())
+```
 **NOTE:** Pre-parsed replay infos are available [HERE](https://drive.google.com/open?id=0Bybnpq8dvwudX1Z5MVp3THFnTlk).
 #### Filter Replays
 ```sh
@@ -38,6 +49,13 @@ python preprocess.py
   --min_apm [MIN_APM]
   --min_mmr [MIN_MMR]
 ```
+**Format of processed files [JSON]:**
+```python
+[[REPLAY_PATH_1, REPLAY_INFO_PATH_1],
+ [REPLAY_PATH_2, REPLAY_INFO_PATH_2],
+ ...,
+ [REPLAY_PATH_N, REPLAY_INFO_PATH_N]]
+```
 **NOTE:** Pre-filtered replay lists are available [HERE](https://drive.google.com/open?id=0Bybnpq8dvwudLWVlU1QtMmNyeE0).
 ### Parsing Replays
 #### Extract Actions
@@ -48,6 +66,21 @@ python extract_actions.py
   --n_instance [N_PROCESSES]
   --batch_size [BATCH_SIZE]
   --step_mul [STEP_SIZE]
+  --width [WORLD_WIDTH]
+  --map_size [MAP_SIZE]
+```
+**Code for reading processed files:**
+```python
+import json
+from google.protobuf.json_format import Parse
+from s2clientprotocol import sc2api_pb2 as sc_pb
+
+with open(ACTION_PATH) as f:
+    actions = json.load(f)
+
+for actions_per_frame in actions:
+    for action_str in actions_per_frame:
+        action = Parse(action_str, sc_pb.Action())
 ```
 **NOTE:** The pre-extracted actions are available **NOW**.
 
@@ -60,6 +93,10 @@ python sample_actions.py
   --infos_path $REPLAY_INFOS$
   --step_mul [STEP_SIZE]
   --skip [SKIP_FRAMES] 
+```
+**Format of processed files [JSON]:**
+```python
+[FRAME_ID_1, FRAME_ID_2, ..., FRAME_ID_N]
 ```
 **NOTE:** The pre-sampled actions are available **NOW**.
 
@@ -74,14 +111,36 @@ python parse_replay.py
   --width [WORLD_WIDTH]
   --map_size [MAP_SIZE]
 ```
+**Code for reading GlobalInfos files:**
+```python
+import json
+from google.protobuf.json_format import Parse
+from s2clientprotocol import sc2api_pb2 as sc_pb
+
+with open(GLOBAL_INFO_PATH) as f:
+    global_info = json.load(f)
+GAME_INFO = Parse(global_info['game_info'], sc_pb.ResponseGameInfo())
+DATA_RAW  = Parse(global_info['data_raw'], sc_pb.ResponseData())
+```
 **NOTE:** The pre-sampled observations are available **NOW**.
 
 [Terran v.s. Terran]() **|** [Terran v.s. Zerg]() **|** [Terran v.s. Protoss]() **|** [Zerg v.s. Zerg]() **|** [Zerg v.s. Protoss]() **|** [Protoss v.s. Protoss]()
 ### Split Training, Validation and Test sets
 ```sh
 python split.py
-  --hq_replays_path $PREFILTERED_REPLAY_LIST_PATH$
+  --hq_replay_set $PREFILTERED_REPLAY_LIST$
+  --parsed_replay_path $PARSED_REPLAYS$
   --save_path $SAVE_PATH$
   --ratio [TRAIN:VAL:TEST]
   --seed [RANDOM_SEED]
 ```
+**Format of processed files [JSON]:**
+```python
+[{"info_path": INFO_PATH,
+  "sampled_action_path": SAMPLED_ACTION_PATH,
+  RACE_1: [{"global_info_path": GLOBAL_INFO_PATH,
+            "action_path": ACTION_PATH,
+            "sampled_observation_path": SAMPLED_OBSERVATION_PATH}, ...],
+  RACE_2: [{...}, ...]}, {...}, ...]
+```
+**NOTE:** The pre-split training, validation and test sets are [**available**](https://github.com/wuhuikai/MSC/tree/master/train_val_test).
