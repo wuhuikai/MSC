@@ -1,7 +1,6 @@
 # MSC
 MSC: A Dataset for Macro-Management in StarCraft II
-## Step-by-Step Instructions on Ubuntu
-### Install [SC2LE](https://github.com/Blizzard/s2client-proto)
+## Install [SC2LE](https://github.com/Blizzard/s2client-proto)
 1. Download and **unzip** (Password: iagreetotheeula) StarCraft II Linux Packages [3.16.1](http://blzdistsc2-a.akamaihd.net/Linux/SC2.3.16.1.zip) into **$STAR_CRAFT$**.
 2. Download and **unzip** (Password: iagreetotheeula) Replay Packs ([3.16.1 - Pack 1](http://blzdistsc2-a.akamaihd.net/ReplayPacks/3.16.1-Pack_1-fix.zip), [3.16.1 - Pack 2](http://blzdistsc2-a.akamaihd.net/ReplayPacks/3.16.1-Pack_2.zip) [Currently not used]) into **$STAR_CRAFT$**.
 
@@ -18,6 +17,28 @@ $STAR_CRAFT$
 - **NOTE:**
     1. **$STAR_CRAFT$/Replays** contains all ***.SC2Replay** files from **3.16.1 - Pack 1** and **3.16.1 - Pack 2** [Currently not used]
     2. **$STAR_CRAFT$/Battle.net** contains all contents from the folder **Battle.net** in **3.16.1 - Pack 1** and **3.16.1 - Pack 2** [Currently not used]
+## Step-by-Step Instructions (The Easy Way)
+### Preprocess
+```sh
+bash preprocess.sh
+```
+### Parse Replay
+```sh
+bash parse_replay.sh $HQ_REPLAY_LIST$ [N_PROCESSES]
+```
+For example:
+```sh
+bash parse_replay.sh high_quality_replays/Protoss_vs_Terran.json 32
+```
+### Compute Stat
+```sh
+bash compute_stat.sh [RACE]
+```
+For example:
+```sh
+bash compute_stat.sh Terran
+```
+## Step-by-Step Instructions on Ubuntu
 ### Preprocessing Replays
 #### Parse Replay Info
 ```sh
@@ -161,7 +182,7 @@ python split.py
 ### Turn Parsed Replays into Global Feature Vectors
 #### Extract Global Features
 ```sh
-python replay2global_features.py:
+python replay2global_features.py
   --hq_replay_set $PREFILTERED_REPLAY_LIST$
   --parsed_replay_path: $PARSED_REPLAYS$
   --step_mul [STEP_SIZE]
@@ -174,3 +195,11 @@ python replay2global_features.py:
 - **NOTE:** The pre-parsed global features are available **NOW**.
 
     [Terran v.s. Terran]() **|** [Terran v.s. Zerg]() **|** [Terran v.s. Protoss]() **|** [Zerg v.s. Zerg]() **|** [Zerg v.s. Protoss]() **|** [Protoss v.s. Protoss]()
+#### Compute Stat
+```sh
+python replay_stat.py
+    --hq_replay_path $PREFILTERED_REPLAY_FOLDER$
+    --parsed_replay_path $PARSED_REPLAYS$
+    --race [RACE]
+```
+**NOTE:** The pre-computed stats are [available](), the files with postfix **'_human.json'** are human readable.
