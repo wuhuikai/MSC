@@ -1,0 +1,1 @@
+python replay_stat.py --race $1
