@@ -37,7 +37,7 @@ The specifics for **S[t, :, :, :]** is as follows:
 **WARNING**[Cheat Layer]: The last layer **S[t, 12, :, :]** refers to **unit_type**, which could only be obtained in replays.
 
 The specifics for **G[t, :]** is as follows:
-1. **[1-11):** frame id + player info, normalized into **[0, 1]**, which is defined [Here](https://github.com/wuhuikai/MSC/blob/1947d3e17dde13890ec5ba03c1f616d7bbcd175e/SpatialFeatures.py#L99).
+1. **[0-11):** frame id + player info, normalized into **[0, 1]**, which is defined [Here](https://github.com/wuhuikai/MSC/blob/1947d3e17dde13890ec5ba03c1f616d7bbcd175e/SpatialFeatures.py#L99).
 2. **[11-24):** cumulative score **[NOT NORMALIZED]**, which is defined in [Here](https://github.com/wuhuikai/MSC/blob/1947d3e17dde13890ec5ba03c1f616d7bbcd175e/SpatialFeatures.py#L113).
 3. **[24]:** reward, i.e. final result of the game. **0**: DEFEAT, **1:** WIN.
 4. **[25]:** ground truth action, ranging from **[0, #ACTION]**.
