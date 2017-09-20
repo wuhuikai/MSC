@@ -136,6 +136,7 @@ class BatchGlobalFeatureEnv(BatchEnv):
         if done:
             return np.zeros(feature_shape)
 
+        self.steps += 1
         state = states[replay_dict['ptr']]
         replay_dict['ptr'] += 1
         if replay_dict['ptr'] == states.shape[0]:
@@ -149,9 +150,9 @@ class BatchGlobalFeatureEnv(BatchEnv):
 
         result_return = [result[:, :, 15:]]
         if reward:
-            result_return.append(result[:, :, 0])
+            result_return.append(result[:, :, 0:1])
         if action:
-            result_return.append(result[:, :, 1])
+            result_return.append(result[:, :, 1:2])
         if score:
             result_return.append(result[:, :, 2:15])
 
@@ -185,6 +186,7 @@ class BatchSpatialEnv(BatchEnv):
         if done:
             return self.Feature(np.zeros(feature_shape_S), np.zeros(feature_shape_G))
 
+        self.steps += 1
         state_S = states_S[replay_dict['ptr']]
         state_G = states_G[replay_dict['ptr']]
         replay_dict['ptr'] += 1
@@ -202,9 +204,9 @@ class BatchSpatialEnv(BatchEnv):
 
         result_return = [S, G[:,:, :11]]
         if reward:
-            result_return.append(G[:, :, 24])
+            result_return.append(G[:, :, 24:25])
         if action:
-            result_return.append(G[:, :, 25])
+            result_return.append(G[:, :, 25:26])
         if score:
             result_return.append(G[:, :, 11:24])
 
