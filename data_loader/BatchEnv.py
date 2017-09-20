@@ -159,6 +159,8 @@ class BatchGlobalFeatureEnv(BatchEnv):
         return result_return
 
 class BatchSpatialEnv(BatchEnv):
+    n_channels = 5
+    n_features = 11
     Feature = namedtuple('Feature', ['S', 'G'])
 
     def __generate_replay_list__(self, replays, root, race):
@@ -202,7 +204,7 @@ class BatchSpatialEnv(BatchEnv):
         S = np.asarray(result.S)
         G = np.asarray(result.G)
 
-        result_return = [S, G[:,:, :11]]
+        result_return = [S[:, :, 8:13, :, :], G[:,:, :11]]
         if reward:
             result_return.append(G[:, :, 24:25])
         if action:
