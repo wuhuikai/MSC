@@ -249,3 +249,21 @@ The stat files with postfix **_human.json** is human-readable.
         --parsed_replay_path: $PARSED_REPLAYS$
         --step_mul [STEP_SIZE]
     ```
+#### Split Training, Validation and Test sets
+```sh
+python split.py
+  --hq_replay_set $PREFILTERED_REPLAY_LIST$
+  --root $ROOT_PARSED_REPLAYS$
+  --parsed_replay_path $PARSED_REPLAYS$
+  --save_path $SAVE_PATH$
+  --ratio [TRAIN:VAL:TEST]
+  --seed [RANDOM_SEED]
+```
+- **Format of processed files [JSON]:**
+    ```python
+    [{RACE_1: [{"global__path": GLOBAL_FEATURE_PATH,
+                "spatial_path_S": SPATIAL_FEATURE_PATH_S,
+                "spatial_path_G": SPATIAL_FEATURE_PATH_G}, ...],
+      RACE_2: [{...}, ...]}, {...}, ...]
+    ```
+- **NOTE:** The pre-split training, validation and test sets are available in [**Here**](https://github.com/wuhuikai/MSC/tree/master/train_val_test).
