@@ -90,3 +90,20 @@ $STAR_CRAFT$
 ### Step-by-Step Instructions
 #### [The Easy Way](instructions/EasyWay.md)
 #### [The Hard Way [Step-by-Step in Details]](instructions/HardWay.md)
+### Requirements
+```
+future == 0.16.0
+
+numpy == 1.13.0
+scipy == 0.19.0
+
+python_gflags == 3.1.1
+
+tqdm == 4.14.0
+
+protobuf == 3.4.0
+pystream_protobuf == 1.4.4
+
+PySC2 == 1.0
+s2clientprotocol == 1.1
+```
