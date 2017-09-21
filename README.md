@@ -27,6 +27,12 @@ The **M**-dimensional vector is orgnized as follows:
         | Terran | - | - | - | - | - | -|
         | Protoss | - | - | - | - | - | - |
         | Zerg | - | - | - | - | - | - |
+Code for loading **F**:
+```python
+import numpy as np
+from scipy import sparse
+F = np.asarray(sparse.load_npz(PATH).todense())
+```
 ## Dataset: Spatial Feature Tensor
 Each replay contains a **(T, 13, 64, 64)** tensor **S** and a **(T, 26)** matrix **G**.
 
@@ -36,11 +42,24 @@ The specifics for **S[t, :, :, :]** is as follows:
 
 **WARNING**[Cheat Layer]: The last layer **S[t, 12, :, :]** refers to **unit_type**, which could only be obtained in replays.
 
+Code for loading **S**:
+```python
+import numpy as np
+from scipy import sparse
+S = np.asarray(sparse.load_npz(PATH).todense()).reshape([-1, 13, 64, 64])
+```
 The specifics for **G[t, :]** is as follows:
 1. **[0-11):** frame id + player info, normalized into **[0, 1]**, which is defined [Here](https://github.com/wuhuikai/MSC/blob/1947d3e17dde13890ec5ba03c1f616d7bbcd175e/SpatialFeatures.py#L99).
 2. **[11-24):** cumulative score **[NOT NORMALIZED]**, which is defined in [Here](https://github.com/wuhuikai/MSC/blob/1947d3e17dde13890ec5ba03c1f616d7bbcd175e/SpatialFeatures.py#L113).
 3. **[24]:** reward, i.e. final result of the game. **0**: DEFEAT, **1:** WIN.
 4. **[25]:** ground truth action, ranging from **[0, #ACTION]**.
+
+Code for loading **G**:
+```python
+import numpy as np
+from scipy import sparse
+G = np.asarray(sparse.load_npz(PATH).todense())
+```
 ## Baselines
 ### Global State Evaluation
 
