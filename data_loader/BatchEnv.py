@@ -161,6 +161,7 @@ class BatchGlobalFeatureEnv(BatchEnv):
 class BatchSpatialEnv(BatchEnv):
     n_channels = 5
     n_features = 11
+    n_actions = 72
     Feature = namedtuple('Feature', ['S', 'G'])
 
     def __generate_replay_list__(self, replays, root, race):
