@@ -115,6 +115,9 @@ def process_replay(sampled_action, actions, observations, feat, units_info, rewa
     return states
 
 def parse_replay(replay_player_path, sampled_action_path, reward):
+    if os.path.isfile(os.path.join(FLAGS.parsed_replay_path, 'GlobalFeatures', replay_player_path)):
+        return
+
     # Global Info
     with open(os.path.join(FLAGS.parsed_replay_path, 'GlobalInfos', replay_player_path)) as f:
         global_info = json.load(f)
