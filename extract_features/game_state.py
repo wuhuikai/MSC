@@ -114,6 +114,8 @@ class GameState(object):
 
         result = np.zeros(len(units_stat)*len(name2id))
         for k, unit in units.items():
+            if k not in units_stat:
+                continue
             start = units_stat[k] * len(name2id)
             result[start + name2id['total_num']] = len(unit['built'])+len(unit['building'])
             if result[start + name2id['total_num']] == 0:
