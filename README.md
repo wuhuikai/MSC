@@ -1,9 +1,13 @@
 # MSC
 MSC: A Dataset for Macro-Management in StarCraft II.
 ## Download
-**[Global]:** [Terran v.s. Terran]() **|** [Terran v.s. Zerg]() **|** [Terran v.s. Protoss]() **|** [Zerg v.s. Zerg]() **|** [Zerg v.s. Protoss]() **|** [Protoss v.s. Protoss]()
+**[Global]:** [ALL](https://drive.google.com/open?id=0Bybnpq8dvwudNUVOX1FCWnZoSGM)
+
 **[Spatial]:** [Terran v.s. Terran]() **|** [Terran v.s. Zerg]() **|** [Terran v.s. Protoss]() **|** [Zerg v.s. Zerg]() **|** [Zerg v.s. Protoss]() **|** [Protoss v.s. Protoss]()
-**[Global+Spatial]:** [Terran v.s. Terran]() **|** [Terran v.s. Zerg]() **|** [Terran v.s. Protoss]() **|** [Zerg v.s. Zerg]() **|** [Zerg v.s. Protoss]() **|** [Protoss v.s. Protoss]()
+
+**[TRAIN|VAL|TEST]:** [ALL](train_val_test)
+
+**[Stat]:** [ALL](parsed_replays/Stat)
 ## Baselines
 ### Global State Evaluation
 | Method | TvT:T | TvZ:T | TvZ:Z | TvP:T | TvP:P | ZvZ:Z | ZvP:Z | ZvP:P | PvP:P |
@@ -30,12 +34,16 @@ The **M**-dimensional vector is orgnized as follows:
     5. **[#2-#3):** research count.
     6. **[#3-#4):** friendly units info, which is defined in [Here](https://github.com/wuhuikai/MSC/blob/ebb1a722206e594e1c3a1da7cf21df8c514e5040/extract_features/game_state.py#L110).
     7. **[#4-M):** enemy units info, where **M = #4 + #[ENEMY RACE]**.
+         
+        | V.S. | TvT:T | TvZ:T | TvZ:Z | TvP:T | TvP:P | ZvZ:Z | ZvP:Z | ZvP:P | PvP:P |
+        | - | - | - | - | - | - | - | - | - | - |
+        | M | 753 | 1131 | 1121 | 663 | 653 | 1499 | 1031 | 1031 | 563 |
 
         | RACE | #1 | #2 | #3 | #4 | #ACTION | #RACE |
         | - | - | - | - | - | - | - |
-        | Terran | - | - | - | - | - | -|
-        | Protoss | - | - | - | - | - | - |
-        | Zerg | - | - | - | - | - | - |
+        | Terran | 29 | 60 | 81 | 417 | 75 | 336|
+        | Protoss | 29 | 55 | 71 | 317 | 61 | 246 |
+        | Zerg | 29 | 55 | 71 | 785 | 74 | 714 |
 Code for loading **F**:
 ```python
 import numpy as np
