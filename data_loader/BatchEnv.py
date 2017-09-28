@@ -113,9 +113,9 @@ class BatchEnv(object):
             self.replay_pbar.close()
 
 class BatchGlobalFeatureEnv(BatchEnv):
-    n_features_dic = {'Terran':  {'Terran': 753,  'Protoss': 663,  'Zerg': 1131},
-                      'Protoss': {'Terran': 653,  'Protoss': 563,  'Zerg': 1031},
-                      'Zerg':    {'Terran': 1121, 'Protoss': 1031, 'Zerg': 1499}}
+    n_features_dic = {'Terran':  {'Terran': 738,  'Protoss': 648,  'Zerg': 1116},
+                      'Protoss': {'Terran': 638,  'Protoss': 548,  'Zerg': 1016},
+                      'Zerg':    {'Terran': 1106, 'Protoss': 1016, 'Zerg': 1484}}
     n_actions_dic = {'Terran': 75, 'Protoss': 61, 'Zerg': 74}
 
     def __post_init__(self):
