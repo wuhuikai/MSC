@@ -37,6 +37,8 @@ class BatchEnv(object):
         self.epoch_pbar = tqdm(total=self.epochs, desc='Epoch')
         self.replay_pbar = None
 
+        self.__post_init__()
+
     def __generate_replay_list__(self, replays, race):
         raise NotImplementedError
 
@@ -111,8 +113,14 @@ class BatchEnv(object):
             self.replay_pbar.close()
 
 class BatchGlobalFeatureEnv(BatchEnv):
-    n_features = 723
-    n_actions = 72
+    n_features_dic = {'Terran':  {'Terran': 753,  'Protoss': 663,  'Zerg': 1131},
+                      'Protoss': {'Terran': 653,  'Protoss': 563,  'Zerg': 1031},
+                      'Zerg':    {'Terran': 1121, 'Protoss': 1031, 'Zerg': 1499}}
+    n_actions_dic = {'Terran': 75, 'Protoss': 61, 'Zerg': 74}
+
+    def __post_init__(self):
+        self.n_features = self.n_features_dic[self.race][self.enemy_race]
+        self.n_actions = self.n_actions_dic[self.race]
 
     def __generate_replay_list__(self, replays, root, race):
         result = []
@@ -161,8 +169,11 @@ class BatchGlobalFeatureEnv(BatchEnv):
 class BatchSpatialEnv(BatchEnv):
     n_channels = 5
     n_features = 11
-    n_actions = 72
+    n_actions_dic = {'Terran': 75, 'Protoss': 61, 'Zerg': 74}
     Feature = namedtuple('Feature', ['S', 'G'])
+
+    def __post_init__(self):
+        self.n_actions = self.n_actions_dic[self.race]
 
     def __generate_replay_list__(self, replays, root, race):
         result = []
