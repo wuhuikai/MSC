@@ -1,13 +1,13 @@
 # MSC
 MSC: A Dataset for Macro-Management in StarCraft II.
 ## Download
-**[Global]:** [ALL](https://drive.google.com/open?id=0Bybnpq8dvwudNUVOX1FCWnZoSGM)
+**FTP:** [ftp://surveillance.idealtest.org/](ftp://surveillance.idealtest.org/) (User Name: msc; Password: msc)
 
-**[Spatial]:** [Terran v.s. Terran]() **|** [Terran v.s. Zerg]() **|** [Terran v.s. Protoss]() **|** [Zerg v.s. Zerg]() **|** [Zerg v.s. Protoss]() **|** [Protoss v.s. Protoss]()
-
-**[TRAIN|VAL|TEST]:** [ALL](train_val_test)
-
-**[Stat]:** [ALL](parsed_replays/Stat)
+**NOTE:**
+- **FTP** link includes **GLobal** features and **Spatial** features. 
+- **Global** features are also available [HERE](https://drive.google.com/open?id=0Bybnpq8dvwudNUVOX1FCWnZoSGM).
+- **[TRAIN|VAL|TEST]:** [ALL](train_val_test)
+- **[Stat]:** [ALL](parsed_replays/Stat)
 ## Baselines
 ### Global State Evaluation
 | Method | TvT:T | TvZ:T | TvZ:Z | TvP:T | TvP:P | ZvZ:Z | ZvP:Z | ZvP:P | PvP:P |
