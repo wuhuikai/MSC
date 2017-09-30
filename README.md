@@ -3,8 +3,26 @@ MSC: A Dataset for Macro-Management in StarCraft II.
 ## Download
 **FTP:** [ftp://surveillance.idealtest.org/](ftp://surveillance.idealtest.org/) (User Name: msc; Password: msc)
 
+- **[Stat]:** ftp://msc:msc@surveillance.idealtest.org/Stat.tar.gz
+
+- **[TRAIN|VAL|TEST]：** ftp://msc:msc@surveillance.idealtest.org/TRAIN-VAL-TEST.tar.gz
+
+- **[Global]:** ftp://msc:msc@surveillance.idealtest.org/GlobalFeatureVector.tar.gz
+
+- **[Spatial]:**
+    - TvT: ftp://msc:msc@surveillance.idealtest.org/TvT.tar.gz
+    - TvP: ftp://msc:msc@surveillance.idealtest.org/TvP.tar.gz
+    - TvZ: ftp://msc:msc@surveillance.idealtest.org/TvZ/TvZ.tar.gz
+    - PvP: ftp://msc:msc@surveillance.idealtest.org/PvP.tar.gz
+    - PvZ: ftp://msc:msc@surveillance.idealtest.org/PvZ.tar.gz
+    - ZvZ: ftp://msc:msc@surveillance.idealtest.org/ZvZ.tar.gz
+
+For **Linux** and **MacOS**:
+```sh
+wget ftp://msc:msc@surveillance.idealtest.org/[FILE_NAME]
+```
+
 **NOTE:**
-- **FTP** link includes **GLobal** features and **Spatial** features, along with **[TRAIN|VAL|TEST]** splits and **Stat** for all races.
 - **Global** features are also available [HERE](https://drive.google.com/open?id=0Bybnpq8dvwudNUVOX1FCWnZoSGM).
 - **[TRAIN|VAL|TEST]** split is also available [HERE](train_val_test).
 - **[Stat]** is also available [HERE](parsed_replays/Stat). The stat files with postfix **_human.json** are human-readable.
