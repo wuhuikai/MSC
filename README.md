@@ -11,7 +11,7 @@ MSC: A Dataset for Macro-Management in StarCraft II.
 
 - **[Spatial]:**
     - TvT: ftp://msc:msc@surveillance.idealtest.org/TvT.tar.gz
-    - TvP: ftp://msc:msc@surveillance.idealtest.org/TvP.tar.gz
+    - TvP: ftp://msc:msc@surveillance.idealtest.org/PvT.tar.gz
     - TvZ: ftp://msc:msc@surveillance.idealtest.org/TvZ/TvZ.tar.gz
     - PvP: ftp://msc:msc@surveillance.idealtest.org/PvP.tar.gz
     - PvZ: ftp://msc:msc@surveillance.idealtest.org/PvZ.tar.gz
