@@ -4,15 +4,16 @@ MSC: A Dataset for Macro-Management in StarCraft II.
 **FTP:** [ftp://surveillance.idealtest.org/](ftp://surveillance.idealtest.org/) (User Name: msc; Password: msc)
 
 **NOTE:**
-- **FTP** link includes **GLobal** features and **Spatial** features. 
+- **FTP** link includes **GLobal** features and **Spatial** features, along with **[TRAIN|VAL|TEST]** splits and **Stat** for all races.
 - **Global** features are also available [HERE](https://drive.google.com/open?id=0Bybnpq8dvwudNUVOX1FCWnZoSGM).
-- **[TRAIN|VAL|TEST]:** [ALL](train_val_test)
-- **[Stat]:** [ALL](parsed_replays/Stat)
+- **[TRAIN|VAL|TEST]** split is also available [HERE](train_val_test).
+- **[Stat]** is also available [HERE](parsed_replays/Stat). The stat files with postfix **_human.json** are human-readable.
+
 ## Baselines
 ### Global State Evaluation
 | Method | TvT:T | TvZ:T | TvZ:Z | TvP:T | TvP:P | ZvZ:Z | ZvP:Z | ZvP:P | PvP:P |
 | - | - | - | - | - | - | - | - | - | - |
-| - | - | - | - | - | - | - | - | - | - |
+| Baseline[Global] | 61.09 | 58.89 | 60.61 | 57.21 | 60.95 | 59.91 | 59.95 | 59.35 | 51.36 |
 ### Build Order Prediction
 | Method | TvT:T | TvZ:T | TvZ:Z | TvP:T | TvP:P | ZvZ:Z | ZvP:Z | ZvP:P | PvP:P |
 | - | - | - | - | - | - | - | - | - | - |
