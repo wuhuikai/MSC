@@ -87,7 +87,7 @@ S = np.asarray(sparse.load_npz(PATH).todense()).reshape([-1, 13, 64, 64])
 The specifics for **G[t, :]** is as follows:
 1. **[0-11):** frame id + player info, normalized into **[0, 1]**, which is defined [Here](https://github.com/wuhuikai/MSC/blob/ebb1a722206e594e1c3a1da7cf21df8c514e5040/extract_features/SpatialFeatures.py#L97).
 2. **[11-24):** cumulative score **[NOT NORMALIZED]**, which is defined in [Here](https://github.com/wuhuikai/MSC/blob/ebb1a722206e594e1c3a1da7cf21df8c514e5040/extract_features/SpatialFeatures.py#L111).
-3. **[24]:** reward, i.e. final result of the game. **0**: DEFEAT, **1:** WIN.
+3. **[24]:** reward, i.e. final result of the game. **1:** WIN, **2**: DEFEAT
 4. **[25]:** ground truth action, ranging from **[0, #ACTION]**.
 
 Code for loading **G**:
