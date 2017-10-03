@@ -203,7 +203,6 @@ class BatchSpatialEnv(BatchEnv):
         self.steps += 1
         state_S = states_S[replay_dict['ptr']]
         state_G = states_G[replay_dict['ptr']]
-        state_G[24] = 2 - state_G[24]
         replay_dict['ptr'] += 1
         if replay_dict['ptr'] == states_S.shape[0]:
             self.replay_pbar.update(1)

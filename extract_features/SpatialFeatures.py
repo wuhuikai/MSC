@@ -90,9 +90,9 @@ class SpatialFeatures(Features):
 
         with sw("feature_layers"):
             out["screen"] = np.stack(
-                f.unpack(obs) for f in SCREEN_FEATURES).astype(np.int32, copy=False)
+                f.unpack(obs)/f.scale for f in SCREEN_FEATURES).astype(np.float32, copy=False)
             out["minimap"] = np.stack(
-                f.unpack(obs) for f in MINIMAP_FEATURES).astype(np.int32, copy=False)
+                f.unpack(obs)/f.scale for f in MINIMAP_FEATURES).astype(np.float32, copy=False)
 
         out["player"] = np.array([
             obs.game_loop - 1,
