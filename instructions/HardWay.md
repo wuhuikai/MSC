@@ -149,6 +149,7 @@ The stat files with postfix **_human.json** is human-readable.
         --hq_replay_set $PREFILTERED_REPLAY_LIST$
         --parsed_replay_path: $PARSED_REPLAYS$
         --step_mul [STEP_SIZE]
+        --n_workers [#PROCESSES]
     ```
 ### Split Training, Validation and Test sets
 ```sh

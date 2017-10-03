@@ -5,7 +5,7 @@ MSC: A Dataset for Macro-Management in StarCraft II.
 
 - **[Stat]:** ftp://msc:msc@surveillance.idealtest.org/Stat.tar.gz
 
-- **[TRAIN|VAL|TEST]：** ftp://msc:msc@surveillance.idealtest.org/TRAIN-VAL-TEST.tar.gz
+- **[TRAIN|VAL|TEST]:** ftp://msc:msc@surveillance.idealtest.org/TRAIN-VAL-TEST.tar.gz
 
 - **[Global]:** ftp://msc:msc@surveillance.idealtest.org/GlobalFeatureVector.tar.gz
 
@@ -73,8 +73,8 @@ F = np.asarray(sparse.load_npz(PATH).todense())
 Each replay contains a **(T, 13, 64, 64)** tensor **S** and a **(T, 26)** matrix **G**.
 
 The specifics for **S[t, :, :, :]** is as follows:
-1. **S[t, 0:8, :, :]:** screen features, normalized into **[0-255]**, which is defined in [Here](https://github.com/wuhuikai/MSC/blob/ebb1a722206e594e1c3a1da7cf21df8c514e5040/extract_features/SpatialFeatures.py#L45).
-2. **S[t, 8:13, :, :]:** minimap features, normalized into **[0-255]**, which is defined in [Here](https://github.com/wuhuikai/MSC/blob/ebb1a722206e594e1c3a1da7cf21df8c514e5040/extract_features/SpatialFeatures.py#L58).
+1. **S[t, 0:8, :, :]:** screen features, roughly normalized into **[0-1]**, which is defined in [Here](https://github.com/wuhuikai/MSC/blob/ebb1a722206e594e1c3a1da7cf21df8c514e5040/extract_features/SpatialFeatures.py#L45).
+2. **S[t, 8:13, :, :]:** minimap features, roughly normalized into **[0-1]**, which is defined in [Here](https://github.com/wuhuikai/MSC/blob/ebb1a722206e594e1c3a1da7cf21df8c514e5040/extract_features/SpatialFeatures.py#L58).
 
 **WARNING**[Cheat Layer]: The last layer **S[t, 12, :, :]** refers to **unit_type**, which could only be obtained in replays.
 
@@ -87,7 +87,7 @@ S = np.asarray(sparse.load_npz(PATH).todense()).reshape([-1, 13, 64, 64])
 The specifics for **G[t, :]** is as follows:
 1. **[0-11):** frame id + player info, normalized into **[0, 1]**, which is defined [Here](https://github.com/wuhuikai/MSC/blob/ebb1a722206e594e1c3a1da7cf21df8c514e5040/extract_features/SpatialFeatures.py#L97).
 2. **[11-24):** cumulative score **[NOT NORMALIZED]**, which is defined in [Here](https://github.com/wuhuikai/MSC/blob/ebb1a722206e594e1c3a1da7cf21df8c514e5040/extract_features/SpatialFeatures.py#L111).
-3. **[24]:** reward, i.e. final result of the game. **1:** WIN, **2**: DEFEAT
+3. **[24]:** reward, i.e. final result of the game. **0:** DEFEAT, **1**: WIN
 4. **[25]:** ground truth action, ranging from **[0, #ACTION]**.
 
 Code for loading **G**:
