@@ -51,7 +51,6 @@ class StateEvaluationGRU(torch.nn.Module):
 
         values = []
         for idx, (state_S, state_G) in enumerate(zip(states_S, states_G)):
-            state_S = state_S / 127.5 - 1
             x_s = F.relu(self.conv1(state_S))
             x_s = F.relu(self.conv2(x_s))
             x_s = x_s.view(-1, 1152)
@@ -121,7 +120,7 @@ def train(model, env, args):
         if env.epoch > epoch:
             epoch = env.epoch
             for p in optimizer.param_groups:
-                p['lr'] *= 0.1
+                p['lr'] *= 0.5
 
         ############################ PLOT ##########################################
         vis.updateTrace(X=np.asarray([env.step_count()]),
@@ -272,7 +271,7 @@ def main():
     parser.add_argument('--seed', type=int, default=1, help='Random seed (default: 1)')
 
     parser.add_argument('--n_steps', type=int, default=20, help='# of forward steps (default: 20)')
-    parser.add_argument('--n_replays', type=int, default=256, help='# of replays (default: 256)')
+    parser.add_argument('--n_replays', type=int, default=32, help='# of replays (default: 32)')
     parser.add_argument('--n_epoch', type=int, default=10, help='# of epoches (default: 10)')
 
     parser.add_argument('--save_intervel', type=int, default=1000000,
