@@ -36,7 +36,8 @@ wget ftp://msc:msc@surveillance.idealtest.org/[FILE_NAME]
 ### Build Order Prediction
 | Method | TvT:T | TvZ:T | TvZ:Z | TvP:T | TvP:P | ZvZ:Z | ZvP:Z | ZvP:P | PvP:P |
 | - | - | - | - | - | - | - | - | - | - |
-| - | - | - | - | - | - | - | - | - | - |
+| Baseline[Global] | 74.12 | 73.01 | 73.89 | 70.29 | 79.28 | 76.07 | 72.02 | 78.08 | 76.28 |
+| Baseline[Spatial] | 73.07 | 73.71 | 75.92 | 64.15 | 75.09 | 74.88 | 72.32 | 76.12 | 74.22 |
 ## Dataset: Global Feature Vector
 Each replay is a **(T, M)** matrix **F**, where **F[t, :]** is the feature vector for time step **t**.
 
