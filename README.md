@@ -32,6 +32,7 @@ wget ftp://msc:msc@surveillance.idealtest.org/[FILE_NAME]
 | Method | TvT:T | TvZ:T | TvZ:Z | TvP:T | TvP:P | ZvZ:Z | ZvP:Z | ZvP:P | PvP:P |
 | - | - | - | - | - | - | - | - | - | - |
 | Baseline[Global] | 61.09 | 58.89 | 60.61 | 57.21 | 60.95 | 59.91 | 59.95 | 59.35 | 51.36 |
+| Baseline[Spatial] | 50.85 | 52.35 | 59.82 | 54.90 | 59.15 | 54.65 | 55.02 | 58.78 | 57.76 |
 ### Build Order Prediction
 | Method | TvT:T | TvZ:T | TvZ:Z | TvP:T | TvP:P | ZvZ:Z | ZvP:Z | ZvP:P | PvP:P |
 | - | - | - | - | - | - | - | - | - | - |
