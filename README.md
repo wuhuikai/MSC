@@ -1,5 +1,13 @@
 # MSC
-MSC: A Dataset for Macro-Management in StarCraft II.
+[MSC: A Dataset for Macro-Management in StarCraft II.](https://arxiv.org/pdf/1710.03131.pdf)
+```
+@article{wu2017ms,
+  title={MSC: A Dataset for Macro-Management in StarCraft II},
+  author={Wu, Huikai and Zhang, Junge and Huang, Kaiqi},
+  journal={arXiv preprint arXiv:1710.03131},
+  year={2017}
+}
+```
 ## Download
 **FTP:** [ftp://surveillance.idealtest.org/](ftp://surveillance.idealtest.org/) (User Name: msc; Password: msc)
 
