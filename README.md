@@ -1,7 +1,7 @@
 # MSC
 [MSC: A Dataset for Macro-Management in StarCraft II.](https://arxiv.org/pdf/1710.03131.pdf)
 ```
-@article{wu2017ms,
+@article{wu2017msc,
   title={MSC: A Dataset for Macro-Management in StarCraft II},
   author={Wu, Huikai and Zhang, Junge and Huang, Kaiqi},
   journal={arXiv preprint arXiv:1710.03131},
