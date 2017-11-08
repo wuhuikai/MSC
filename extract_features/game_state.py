@@ -79,7 +79,7 @@ class GameState(object):
         # Friendly units
         self.friendly_units = self.__set_units__(state['friendly_units'])
         # Enemy units
-        self.friendly_units = self.__set_units__(state['enemy_units'])
+        self.enemy_units    = self.__set_units__(state['enemy_units'])
 
     def get_action(self):
         return self.stat['action_id'][self.action]
