@@ -9,7 +9,7 @@ import json
 import signal
 import threading
 import queue as Queue
-import gflags as flags
+from absl import flags
 import multiprocessing
 from itertools import chain
 from future.builtins import range
