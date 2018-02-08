@@ -4,12 +4,11 @@ from __future__ import print_function
 
 import os
 import json
-import gflags as flags
+from absl import flags
 from tqdm import tqdm
 
 from google.protobuf.json_format import Parse
 
-from pysc2.lib import app
 from pysc2.lib import features
 from pysc2.lib import  FUNCTIONS
 from s2clientprotocol import sc2api_pb2 as sc_pb
@@ -77,7 +76,7 @@ def sample_action(replay_path, action_path, sampled_path):
     with open(os.path.join(sampled_path, replay_path), 'w') as f:
         json.dump(sampled_actions, f)
 
-def main(_):
+def main():
     with open(FLAGS.hq_replay_set) as f:
         replay_list = json.load(f)
     replay_list = sorted([p for p, _ in replay_list])
@@ -94,4 +93,4 @@ def main(_):
         pbar.update()
 
 if __name__ == '__main__':
-    app.run()
+    main()

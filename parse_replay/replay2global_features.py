@@ -5,13 +5,12 @@ from __future__ import print_function
 import os
 import json
 import stream
-import gflags as flags
+from absl import flags
 
 from tqdm import tqdm
 
 from google.protobuf.json_format import Parse
 
-from pysc2.lib import app
 from pysc2.lib import features
 from pysc2.lib import FUNCTIONS
 from pysc2.lib import static_data
@@ -146,7 +145,7 @@ def parse_replay(replay_player_path, sampled_action_path, reward):
     with open(os.path.join(FLAGS.parsed_replay_path, 'GlobalFeatures', replay_player_path), 'w') as f:
         json.dump(states, f)
 
-def main(_):
+def main():
     with open(FLAGS.hq_replay_set) as f:
         replay_list = sorted(json.load(f))
 
@@ -176,4 +175,4 @@ def main(_):
         pbar.update()
 
 if __name__ == '__main__':
-    app.run()
+    main()

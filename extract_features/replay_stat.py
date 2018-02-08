@@ -8,11 +8,9 @@ import numpy as np
 
 import os
 import json
-import gflags as flags
+from absl import flags
 
 from tqdm import tqdm
-
-from pysc2.lib import app
 
 FLAGS = flags.FLAGS
 flags.DEFINE_string(name='hq_replay_path', default='../high_quality_replays',
@@ -79,7 +77,7 @@ def post_process(stat):
 
     return dict_key_to_str(stat)
 
-def main(_):
+def main():
     replay_lists = sorted(glob.glob(os.path.join(FLAGS.hq_replay_path, '*{}*.json'.format(FLAGS.race))))
     save_path = os.path.join(FLAGS.parsed_replay_path, 'Stat')
     if not os.path.isdir(save_path):
@@ -126,4 +124,4 @@ def main(_):
         json.dump(stat, f)
 
 if __name__ == '__main__':
-    app.run()
+    main()

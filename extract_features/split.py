@@ -1,10 +1,9 @@
 import os
 import json
 import numpy as np
-import gflags as flags
+from absl import flags
 
 from google.protobuf.json_format import Parse
-from pysc2.lib import app
 from s2clientprotocol import sc2api_pb2 as sc_pb
 
 FLAGS = flags.FLAGS
@@ -26,7 +25,7 @@ def save(replays, prefix, folder):
     with open(os.path.join(folder, prefix+'.json'), 'w') as f:
         json.dump(replays, f)
 
-def main(_):
+def main():
     np.random.seed(FLAGS.seed)
     ratio = np.asarray([float(i) for i in FLAGS.ratio.split(':')])
     ratio /= np.sum(ratio)
@@ -89,4 +88,4 @@ def main(_):
     save(result[val_end:], 'test', FLAGS.save_path)
 
 if __name__ == '__main__':
-    app.run()
+    main()

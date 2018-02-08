@@ -5,13 +5,12 @@ from __future__ import print_function
 import os
 import json
 import glob
-import gflags as flags
+from absl import flags
 from tqdm import tqdm
 
 from google.protobuf.json_format import Parse
 
 from pysc2 import run_configs
-from pysc2.lib import app
 from s2clientprotocol import sc2api_pb2 as sc_pb
 
 FLAGS = flags.FLAGS
@@ -52,7 +51,7 @@ def valid_replay(info, ping):
 
     return True
 
-def main(_):
+def main():
     if not os.path.isdir(FLAGS.save_path):
         os.makedirs(FLAGS.save_path)
     replay_infos = glob.glob(os.path.join(FLAGS.infos_path, '*.SC2Replay'))
@@ -82,4 +81,4 @@ def main(_):
             json.dump(v, f)
 
 if __name__ == '__main__':
-    app.run()
+    main()

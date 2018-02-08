@@ -10,13 +10,12 @@ import signal
 import threading
 import queue as Queue
 import multiprocessing
-import gflags as flags
+from absl import flags
 from future.builtins import range
 
 from google.protobuf.json_format import MessageToJson
 
 from pysc2 import run_configs
-from pysc2.lib import app
 from pysc2.lib import point
 from s2clientprotocol import sc2api_pb2 as sc_pb
 
@@ -115,7 +114,7 @@ def replay_queue_filler(replay_queue, replay_list):
     for replay_path in replay_list:
         replay_queue.put(replay_path)
 
-def main(unused_argv):
+def main():
     race_vs_race = os.path.basename(FLAGS.hq_replay_set).split('.')[0]
     FLAGS.save_path = os.path.join(FLAGS.save_path, 'Actions', race_vs_race)
 
@@ -148,4 +147,4 @@ def main(unused_argv):
         print("Caught KeyboardInterrupt, exiting.")
 
 if __name__ == '__main__':
-    app.run()
+    main()

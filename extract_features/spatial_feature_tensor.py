@@ -5,7 +5,7 @@ from __future__ import print_function
 import os
 import json
 import stream
-import gflags as flags
+from absl import flags
 from multiprocessing import Pool
 
 import numpy as np
@@ -15,7 +15,6 @@ from tqdm import tqdm
 
 from google.protobuf.json_format import Parse
 
-from pysc2.lib import app
 from pysc2.lib import FUNCTIONS
 from s2clientprotocol import sc2api_pb2 as sc_pb
 
@@ -106,7 +105,7 @@ max_keys = ['frame_id', 'minerals', 'vespene', 'food_cap',
                     'food_cap', 'food_cap', 'food_cap', 'idle_worker_count',
                         'army_count', 'warp_gate_count', 'larva_count']
 
-def main(_):
+def main():
     with open(FLAGS.hq_replay_set) as f:
         replay_list = sorted(json.load(f))
 
@@ -129,4 +128,4 @@ def main(_):
             pbar.update()
 
 if __name__ == '__main__':
-    app.run()
+    main()

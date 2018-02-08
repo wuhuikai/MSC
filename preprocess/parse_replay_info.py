@@ -15,7 +15,6 @@ from itertools import chain
 from future.builtins import range
 from google.protobuf.json_format import MessageToJson
 
-from pysc2.lib import app
 from pysc2 import run_configs
 
 FLAGS = flags.FLAGS
@@ -65,7 +64,7 @@ def replay_queue_filler(replay_queue, replay_list):
     for replay_path in replay_list:
         replay_queue.put(replay_path)
 
-def main(unused_argv):
+def main():
     if not os.path.isdir(FLAGS.save_path):
         os.makedirs(FLAGS.save_path)
 
@@ -93,4 +92,4 @@ def main(unused_argv):
         print("Caught KeyboardInterrupt, exiting.")
 
 if __name__ == '__main__':
-    app.run()
+    main()
