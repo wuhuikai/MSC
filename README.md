@@ -9,6 +9,10 @@
 }
 ```
 ## Download
+### NOT AVAILABLE AT PRESENT
+The download server is down at present. Please follow the [instructions](#step-by-step-instructions) to generate the dataset yourself. **Stay tuned :(**
+
+
 **FTP:** [ftp://surveillance.idealtest.org/](ftp://surveillance.idealtest.org/) (User Name: msc; Password: msc)
 
 - **[Stat]:** ftp://msc:msc@surveillance.idealtest.org/Stat.tar.gz
