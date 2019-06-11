@@ -9,35 +9,10 @@
 }
 ```
 ## Download
-### NOT AVAILABLE AT PRESENT
-The download server is down at present. Please follow the [instructions](#step-by-step-instructions) to generate the dataset yourself. **Stay tuned :(**
-
-
-**FTP:** [ftp://surveillance.idealtest.org/](ftp://surveillance.idealtest.org/) (User Name: msc; Password: msc)
-
-- **[Stat]:** ftp://msc:msc@surveillance.idealtest.org/Stat.tar.gz
-
-- **[TRAIN|VAL|TEST]:** ftp://msc:msc@surveillance.idealtest.org/TRAIN-VAL-TEST.tar.gz
-
-- **[Global]:** ftp://msc:msc@surveillance.idealtest.org/GlobalFeatureVector.tar.gz
-
-- **[Spatial]:**
-    - TvT: ftp://msc:msc@surveillance.idealtest.org/TvT.tar.gz
-    - TvP: ftp://msc:msc@surveillance.idealtest.org/PvT.tar.gz
-    - TvZ: ftp://msc:msc@surveillance.idealtest.org/TvZ/TvZ.tar.gz
-    - PvP: ftp://msc:msc@surveillance.idealtest.org/PvP.tar.gz
-    - PvZ: ftp://msc:msc@surveillance.idealtest.org/PvZ.tar.gz
-    - ZvZ: ftp://msc:msc@surveillance.idealtest.org/ZvZ.tar.gz
-
-For **Linux** and **MacOS**:
-```sh
-wget ftp://msc:msc@surveillance.idealtest.org/[FILE_NAME]
-```
-
-**NOTE:**
-- **Global** features are also available [HERE](https://drive.google.com/open?id=0Bybnpq8dvwudNUVOX1FCWnZoSGM).
-- **[TRAIN|VAL|TEST]** split is also available [HERE](train_val_test).
-- **[Stat]** is also available [HERE](parsed_replays/Stat). The stat files with postfix **_human.json** are human-readable.
+- **Global** features are available [HERE](https://drive.google.com/open?id=0Bybnpq8dvwudNUVOX1FCWnZoSGM).
+- **[TRAIN|VAL|TEST]** split is available [HERE](train_val_test).
+- **[Stat]** is available [HERE](parsed_replays/Stat). The stat files with postfix **_human.json** are human-readable.
+- **Spatial** features are **NOT** avaiable since I do not have any download server. Please follow the [instructions](#step-by-step-instructions) to generate the spatial features by yourself.
 
 ## Baselines
 ### Global State Evaluation
