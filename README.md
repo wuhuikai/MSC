@@ -9,7 +9,7 @@
 }
 ```
 ## Download
-- **Global** features are available [HERE](https://drive.google.com/open?id=0Bybnpq8dvwudNUVOX1FCWnZoSGM).
+- **Global** features are available [HERE]([https://drive.google.com/open?id=0Bybnpq8dvwudNUVOX1FCWnZoSGM](https://drive.google.com/file/d/0Bybnpq8dvwudNUVOX1FCWnZoSGM/view?usp=sharing&resourcekey=0-GJ3Loydd4k2QaONnVd3B5Q)).
 - **[TRAIN|VAL|TEST]** split is available [HERE](train_val_test).
 - **[Stat]** is available [HERE](parsed_replays/Stat). The stat files with postfix **_human.json** are human-readable.
 - **Spatial** features are **NOT** avaiable since I do not have any download server. Please follow the [instructions](#step-by-step-instructions) to generate the spatial features by yourself.
